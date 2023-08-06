@@ -1,21 +1,24 @@
 import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
-import AppBar from '../AppBar';
+import Container from '@mui/material/Container';
+import MyAppBar from '../MyAppBar';
 
 const Layout = () => {
   return (
-    <>
-      <AppBar />
-      <Suspense
-        fallback={
-          <div>
-            <p>Loading...</p>
-          </div>
-        }
-      >
-        <Outlet />
-      </Suspense>
-    </>
+    <div>
+      <MyAppBar />
+      <Container component="main" maxWidth="xl">
+        <Suspense
+          fallback={
+            <div>
+              <p>Loading...</p>
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
+      </Container>
+    </div>
   );
 };
 

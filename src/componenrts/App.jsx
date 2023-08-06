@@ -7,14 +7,11 @@ import PublicRoute from '../componenrts/PublicRoute';
 import PrivateRoute from '../componenrts/PrivateRoute';
 
 import Layout from './Layout';
-// const Layout = lazy(() => import('./Layout'));
-import About from '../pages/About';
-// const About = lazy(() => import('../pages/About'));
-import ContactsPage from '../pages/ContactsPage';
-// const ContactsPage = lazy(() => import('../pages/ContactsPage'));
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
-import SingleContactPage from '../pages/SingleContactPage';
+const About = lazy(() => import('../pages/About'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const RegisterPage = lazy(() => import('../pages/RegisterPage'));
+const SingleContactPage = lazy(() => import('../pages/SingleContactPage'));
 
 function App() {
   const dispatch = useDispatch();

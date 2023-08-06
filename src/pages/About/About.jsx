@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const About = () => {
   return (
-    <div>
-      <h1>About</h1>
+    <Box>
+      <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+        Phonebook
+      </Typography>
       <p>
         Simple study web app to store contacts in a cloud.{' '}
         <Link to="/register">Register</Link> your account or{' '}
@@ -21,14 +25,14 @@ const About = () => {
       </p>
       <p>In this application I had used following framework and libraries:</p>
       <ul>
-        <li>React</li>
-        <li>Redux, redux-toolkit</li>
-        <li>React-router-dom</li>
-        <li>React-persist</li>
-        <li>Axios</li>
-        <li>Custom components</li>
+        <li>- React</li>
+        <li>- Redux, redux-toolkit</li>
+        <li>- React-router-dom</li>
+        <li>- React-persist</li>
+        <li>- Axios</li>
+        <li>- MUI components</li>
       </ul>
-    </div>
+    </Box>
   );
 };
 
