@@ -5,7 +5,6 @@ import userOperations from '../redux/user/user-operations';
 import userSeletors from '../redux/user/user-selectors';
 import PublicRoute from '../componenrts/PublicRoute';
 import PrivateRoute from '../componenrts/PrivateRoute';
-
 import Layout from './Layout';
 const About = lazy(() => import('../pages/About'));
 const ContactsPage = lazy(() => import('../pages/ContactsPage'));

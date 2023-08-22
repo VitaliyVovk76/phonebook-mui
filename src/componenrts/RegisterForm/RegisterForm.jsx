@@ -11,14 +11,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import userOperations from '../../redux/user/user-operations';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -26,37 +25,46 @@ const RegisterForm = () => {
     event.preventDefault();
   };
 
-  const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-      case 'name':
-        return setName(value);
-      case 'email':
-        return setEmail(value);
-      case 'password':
-        return setPassword(value);
-      default:
-        throw new Error(`Тип поля name ${name} не обрабатывается`);
-    }
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = event => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const password = data.get('password');
+    const name = data.get('name');
     if (email.trim() === '' || password.trim() === '' || name.trim() === '') {
-      alert('Enter the form');
+      toast.warn('Fill the form!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      return;
+    }
+    if (password.trim().length < 8) {
+      toast.warn('Password must be at least 8 characters long', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
     dispatch(userOperations.register({ name, email, password }));
-    reset();
+    event.currentTarget.reset();
   };
 
-  const reset = () => {
-    setName('');
-    setEmail('');
-    setPassword('');
-  };
   return (
     <Box
       component="form"
+      noValidate
       onSubmit={handleSubmit}
       sx={{
         display: 'flex',
@@ -80,8 +88,6 @@ const RegisterForm = () => {
         variant="standard"
         type="text"
         name="name"
-        value={name}
-        onChange={handleChange}
       />
       <TextField
         required
@@ -91,8 +97,6 @@ const RegisterForm = () => {
         variant="standard"
         type="email"
         name="email"
-        value={email}
-        onChange={handleChange}
       />
       <FormControl variant="standard" sx={{ marginBottom: '10px' }}>
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -100,8 +104,6 @@ const RegisterForm = () => {
           id="standard-adornment-password"
           type={showPassword ? 'text' : 'password'}
           name="password"
-          value={password}
-          onChange={handleChange}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

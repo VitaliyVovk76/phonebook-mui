@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -21,7 +19,7 @@ const UserMenu = () => {
       }}
     >
       <ListItem>
-        <Typography variant="h7">Welcom,{name}</Typography>
+        <Typography sx={{ minWidth: 150 }}>Welcom, {name}</Typography>
       </ListItem>
       <ListItem disablePadding>
         <ListItemButton

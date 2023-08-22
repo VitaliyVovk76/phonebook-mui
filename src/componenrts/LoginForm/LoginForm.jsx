@@ -11,13 +11,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import userOperations from '../../redux/user/user-operations';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -25,45 +25,55 @@ const LoginForm = () => {
     event.preventDefault();
   };
 
-  const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-      case 'email':
-        return setEmail(value);
-      case 'password':
-        return setPassword(value);
-      default:
-        throw new Error(`Тип поля name ${name} не обрабатывается`);
-    }
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = event => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const password = data.get('password');
     if (email.trim() === '' || password.trim() === '') {
-      alert('Enter the form');
+      toast.warn('Fill the form!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      return;
+    }
+    if (password.trim().length < 8) {
+      toast.warn('Password must be at least 8 characters long', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
     dispatch(userOperations.logIn({ email, password }));
-    reset();
-  };
-
-  const reset = () => {
-    setEmail('');
-    setPassword('');
+    event.currentTarget.reset();
   };
 
   return (
     <Box
       component="form"
+      noValidate
       onSubmit={handleSubmit}
       sx={{
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '400px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         marginTop: { xs: '20px', sm: '100px' },
         paddingLeft: '16px',
         paddingRight: '16px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
       }}
     >
       <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
@@ -71,14 +81,13 @@ const LoginForm = () => {
       </Typography>
       <TextField
         required
+        fullWidth
         sx={{ marginBottom: '10px' }}
         id="standard-required"
         label="Email address"
         variant="standard"
         type="email"
         name="email"
-        value={email}
-        onChange={handleChange}
       />
       <FormControl variant="standard" sx={{ marginBottom: '10px' }}>
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -86,8 +95,6 @@ const LoginForm = () => {
           id="standard-adornment-password"
           type={showPassword ? 'text' : 'password'}
           name="password"
-          value={password}
-          onChange={handleChange}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

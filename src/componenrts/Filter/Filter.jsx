@@ -1,5 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import { changeFilter } from '../../redux/filter/filter-slice';
 import selectorsFilter from '../../redux/filter/filter-selectors';
 
@@ -8,13 +11,23 @@ const Filter = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <h2>Find contacts by name</h2>
+      <CssBaseline />
+      <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+        Find contacts by name
+      </Typography>
       <div>
-        <input
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="text"
+          label="Enter the contact name"
+          variant="standard"
           type="text"
+          name="filter"
           value={value}
-          placeholder="Enter the contact name"
           onChange={e => dispatch(changeFilter(e.target.value))}
+          autoFocus
         />
       </div>
     </>

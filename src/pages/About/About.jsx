@@ -12,8 +12,8 @@ const About = () => {
         Simple study web app to store contacts in a cloud.{' '}
         <Link to="/register">Register</Link> your account or{' '}
         <Link to="/login">log in</Link> by using email and password, and you’ll
-        get personal contacts notebook. Phone book can be accessed from desctop
-        device and any browsers.
+        get personal contacts notebook. Phone book can be accessed from any
+        devices and any browsers.
       </p>
       <p>
         Registration format: <br /> - name must be unique <br /> - e-mail as
